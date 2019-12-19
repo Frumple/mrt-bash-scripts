@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Path of file storing what dynmap render is currently running
+DYNMAP_RENDER_FILE_PATH=$SCRIPT_DIR/data/dynmap_render

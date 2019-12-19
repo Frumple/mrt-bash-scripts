@@ -1,0 +1,5 @@
+#!/bin/bash
+source $SCRIPT_DIR/config/base_config
+
+MYSQL_MINECRAFT_USERNAME=minecraft_$SERVER_NAME
+MYSQL_MINECRAFT_PASSWORD=

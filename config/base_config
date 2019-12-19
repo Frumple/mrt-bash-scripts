@@ -1,0 +1,4 @@
+#!/bin/bash
+
+SERVER_NAME=main
+CONTAINER_NAME=minecraft-$SERVER_NAME

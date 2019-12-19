@@ -1,0 +1,13 @@
+#!/bin/bash
+source $SCRIPT_DIR/config/base_config
+
+MINECRAFT_WORLD_SAVE_DELAY_IN_SECONDS=5
+
+SYNC_ENABLED=true
+SYNC_SOURCE=/home/minecraft/servers/$SERVER_NAME
+SYNC_DESTINATION=/data/minecraft/servers/$SERVER_NAME
+SYNC_VERBOSITY=5
+SYNC_NICE_PREAMBLE="nice -n 19 ionice -c3"
+SYNC_BACKUP_ARGUMENTS="--create-full-path --no-compression --no-file-statistics --print-statistics"
+SYNC_REMOVE_DIFFS_OLDER_THAN=8D
+

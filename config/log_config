@@ -1,0 +1,5 @@
+#!/bin/bash
+source $SCRIPT_DIR/config/base_config
+
+SERVER_LOGS_PATH=/home/minecraft/servers/$SERVER_NAME/logs
+LATEST_LOG_PATH=$SERVER_LOGS_PATH/latest.log

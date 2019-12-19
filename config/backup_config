@@ -1,0 +1,4 @@
+#!/bin/bash
+source $SCRIPT_DIR/config/base_config
+
+BACKUPS_DIR=/data/backups

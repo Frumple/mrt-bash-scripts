@@ -1,0 +1,16 @@
+#!/bin/bash
+
+declare -A DYNMAP_TILES
+
+DYNMAP_TILES["new-flat"]=1340961
+DYNMAP_TILES["new-surface"]=957151
+DYNMAP_TILES["old-flat"]=45796
+DYNMAP_TILES["old-surface"]=41102
+DYNMAP_TILES["lab-flat"]=69696
+DYNMAP_TILES["lab-surface"]=62140
+DYNMAP_TILES["games-flat"]=19600
+DYNMAP_TILES["games-surface"]=17664
+DYNMAP_TILES["map-flat"]=24964
+DYNMAP_TILES["map-surface"]=22400
+DYNMAP_TILES["space-flat"]=19600
+DYNMAP_TILES["space-surface"]=17664

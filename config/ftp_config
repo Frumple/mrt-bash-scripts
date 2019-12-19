@@ -1,0 +1,9 @@
+#!/bin/bash
+source $SCRIPT_DIR/config/base_config
+
+FTP_BACKUP_USERNAME=
+FTP_BACKUP_PASSWORD=
+FTP_BACKUP_SERVER=
+
+FTP_BACKUP_SOURCE=/data/minecraft/servers/$SERVER_NAME
+FTP_BACKUP_TARGET=main
