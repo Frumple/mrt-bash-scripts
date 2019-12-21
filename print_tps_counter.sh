@@ -23,7 +23,7 @@ TPS_SEARCH_NUMBER_OF_LINES=100
 TPS_OUTPUT_LINE_REGEX="\[Server thread/INFO\]: TPS from last 1m, 5m, 15m:"
 
 # Regex to get the latest TPS value
-TPS_VALUE_REGEX="[0-9]+\.[0-9]+"
+TPS_VALUE_REGEX="[0-9]+\.[0-9]+\*?"
 
 # Minimum threshold for good TPS
 TPS_GOOD_THRESHOLD=18
@@ -71,7 +71,7 @@ print_tps_counter()
   local color="white"
   local change="(?)"
 
-  if [[ -z "$current_tps_value" ]]; then
+  if [[ -z "$current_tps_value" ]] || [[ "$current_tps_value" == *\* ]]; then
     current_tps_value="N/A"
     color="red"
   else
