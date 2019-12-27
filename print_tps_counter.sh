@@ -73,7 +73,7 @@ print_tps_counter()
 
   if [[ -z "$current_tps_value" ]] || [[ "$current_tps_value" == \** ]]; then
     current_tps_value="N/A"
-    color="red"
+    color="dark_purple"
   else
     if [[ $(echo "$current_tps_value >= $TPS_GOOD_THRESHOLD" | bc -l) -eq 1 ]]; then
       color="green"
