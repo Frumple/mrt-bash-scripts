@@ -60,7 +60,7 @@ save_minecraft_world()
     command+=" flush"
   fi
 
-  run_minecraft_command $command
+  run_minecraft_command "$command"
   sync
   sleep $MINECRAFT_SAVE_ALL_DELAY_IN_SECONDS
 }
