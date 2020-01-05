@@ -53,9 +53,16 @@ exit_readonly_mode_in_minecraft()
 
 save_minecraft_world()
 {
-  run_minecraft_command "save-all"
+  local flush=$1
+  local command="save-all"
+
+  if $flush; then
+    command+=" flush"
+  fi
+
+  run_minecraft_command $command
   sync
-  sleep $MINECRAFT_WORLD_SAVE_DELAY_IN_SECONDS
+  sleep $MINECRAFT_SAVE_ALL_DELAY_IN_SECONDS
 }
 
 restart_minecraft_server()

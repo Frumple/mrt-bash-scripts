@@ -72,7 +72,7 @@ dump_plugin_database()
 sync_minecraft_files()
 {
   enter_readonly_mode_in_minecraft
-  save_minecraft_world
+  save_minecraft_world true
   copy_diffs
   clean_old_diffs
   exit_readonly_mode_in_minecraft
