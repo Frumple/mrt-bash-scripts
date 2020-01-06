@@ -1,5 +1,9 @@
 #!/bin/bash
 source $SCRIPT_DIR/config/base_config
+source $SCRIPT_DIR/config/log_config
+source $SCRIPT_DIR/config/minecraft_config
+
+source $SCRIPT_DIR/lib/log_utils.sh
 
 run_minecraft_command()
 {
@@ -55,14 +59,21 @@ save_minecraft_world()
 {
   local flush=$1
   local command="save-all"
+  local save_all_time_in_seconds=1
 
   if $flush; then
     command+=" flush"
   fi
 
   run_minecraft_command "$command"
+  sleep 1
+
+  while [ $(get_number_of_matching_lines "Saved the game" "$LATEST_LOG_PATH" $SAVE_ALL_SEARCH_NUMBER_OF_LINES) -lt 1 ] && [ $save_all_time_in_seconds -lt $SAVE_ALL_TIMEOUT_IN_SECONDS ]
+  do
+    sleep 1
+    ((save_all_time_in_seconds++))
+  done
   sync
-  sleep $MINECRAFT_SAVE_ALL_DELAY_IN_SECONDS
 }
 
 restart_minecraft_server()
