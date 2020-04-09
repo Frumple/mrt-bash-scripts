@@ -9,9 +9,9 @@ is_rdiff_backup_running()
   fi
 }
 
-is_lftp_running()
+is_duplicity_running()
 {
-  if [[ `ps acx | grep -v "grep" | grep --count "lftp"` -gt 0 ]]; then
+  if [[ `ps aux | grep -v "grep" | grep --count "duplicity"` -gt 0 ]]; then
     true
   else
     false

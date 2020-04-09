@@ -17,7 +17,7 @@ sync_minecraft_server()
 {
   sleep $START_DELAY_IN_SECONDS
 
-  if is_lftp_running; then
+  if is_duplicity_running; then
     tellraw_in_minecraft "[Server] WARNING: Unable to run world save." "red" "bold,italic"
     tellraw_in_minecraft "[Server] Reason: Offsite backup is in progress." "red" "bold,italic"
     exit 1

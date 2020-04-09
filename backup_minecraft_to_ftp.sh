@@ -9,10 +9,10 @@ source $SCRIPT_DIR/lib/sync_utils.sh
 
 backup_minecraft_to_ftp()
 {
-  if is_lftp_running; then
+  if is_duplicity_running; then
     tellraw_in_minecraft "[Server] WARNING: Unable to run offsite backup." "dark_red" "bold,italic"
     tellraw_in_minecraft "[Server] Reason: Another offsite backup is in progress." "dark_red" "bold,italic"
-    printf "lftp is currently running. Aborting...\n"
+    printf "duplicity is currently running. Aborting...\n"
     exit 1
   fi
 
@@ -23,8 +23,10 @@ backup_minecraft_to_ftp()
     exit 1
   fi
 
-  run_progress_timer "cleanup_old_ftp_backup" \
-    "-s" "[Server] Cleaning up old offsite backup..." \
+  export FTP_PASSWORD=$FTP_BACKUP_PASSWORD
+
+  run_progress_timer "cleanup_old_ftp_backups" \
+    "-s" "[Server] Cleaning up old offsite backups..." \
     "-p" "[Server] Offsite backup cleanup in progress" \
     "-f" "[Server] Offsite backup cleanup complete" \
     "-m" "60" \
@@ -39,26 +41,32 @@ backup_minecraft_to_ftp()
     "-h" "true" \
     "-c" "light_purple" \
     "-o" "bold,italic"
-}
 
-cleanup_old_ftp_backup()
-{
-  run_lftp_command "rm -rf $FTP_BACKUP_TARGET"
+  unset FTP_PASSWORD
 }
 
 run_ftp_backup()
 {
-  run_lftp_command "mirror -R -P 3 $FTP_BACKUP_SOURCE"
+  duplicity \
+    $FTP_BACKUP_COMMON_OPTIONS \
+    --full-if-older-than $FTP_BACKUP_FULL_BACKUP_EVERY \
+    $FTP_BACKUP_SOURCE \
+    $FTP_BACKUP_TARGET
 }
 
-run_lftp_command()
+cleanup_old_ftp_backups()
 {
-  local command=$1
+  duplicity \
+    remove-older-than $FTP_BACKUP_REMOVE_BACKUPS_OLDER_THAN \
+    $FTP_BACKUP_CLEANUP_OPTIONS \
+    $FTP_BACKUP_COMMON_OPTIONS \
+    $FTP_BACKUP_TARGET
 
-  lftp \
-    -e "set ssl-allow false; $command; exit" \
-    -u $FTP_BACKUP_USERNAME,$FTP_BACKUP_PASSWORD \
-    $FTP_BACKUP_SERVER
+  duplicity \
+    cleanup \
+    $FTP_BACKUP_CLEANUP_OPTIONS \
+    $FTP_BACKUP_COMMON_OPTIONS \
+    $FTP_BACKUP_TARGET
 }
 
 backup_minecraft_to_ftp

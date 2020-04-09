@@ -6,4 +6,10 @@ FTP_BACKUP_PASSWORD=
 FTP_BACKUP_SERVER=
 
 FTP_BACKUP_SOURCE=/data/minecraft/servers/$SERVER_NAME
-FTP_BACKUP_TARGET=main
+FTP_BACKUP_TARGET=ftp://$FTP_BACKUP_USERNAME@$FTP_BACKUP_SERVER/servers/$SERVER_NAME
+
+FTP_BACKUP_COMMON_OPTIONS="--exclude-device-files --exclude-other-filesystems --exclude **/.cache/** --exclude **/rdiff-backup-data/** --asynchronous-upload --no-encryption --ssl-no-check-certificate --verbosity 8"
+FTP_BACKUP_CLEANUP_OPTIONS="--force --extra-clean"
+
+FTP_BACKUP_FULL_BACKUP_EVERY=1s
+FTP_BACKUP_REMOVE_BACKUPS_OLDER_THAN=1s
