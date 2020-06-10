@@ -56,17 +56,10 @@ run_ftp_backup()
 
 cleanup_old_ftp_backups()
 {
-  duplicity \
-    remove-older-than $FTP_BACKUP_REMOVE_BACKUPS_OLDER_THAN \
-    $FTP_BACKUP_CLEANUP_OPTIONS \
-    $FTP_BACKUP_COMMON_OPTIONS \
-    $FTP_BACKUP_TARGET
-
-  duplicity \
-    cleanup \
-    $FTP_BACKUP_CLEANUP_OPTIONS \
-    $FTP_BACKUP_COMMON_OPTIONS \
-    $FTP_BACKUP_TARGET
+  lftp \
+    -e "set ssl-allow false; rm -rf servers/$SERVER_NAME; mkdir servers/$SERVER_NAME; exit" \
+    -u $FTP_BACKUP_USERNAME,$FTP_BACKUP_PASSWORD \
+    $FTP_BACKUP_SERVER
 }
 
 backup_minecraft_to_ftp
