@@ -31,7 +31,9 @@ backup_minecraft_to_ftp()
     "-f" "[Server] Offsite backup cleanup complete" \
     "-m" "60" \
     "-c" "light_purple" \
-    "-o" "bold,italic"
+    "-o" "bold,italic" \
+    "-d" "true" \
+    "-u" "Offsite Backup"
 
   run_progress_timer "run_ftp_backup" \
     "-s" "[Server] Starting offsite backup..." \
@@ -40,7 +42,9 @@ backup_minecraft_to_ftp()
     "-m" "60" \
     "-h" "true" \
     "-c" "light_purple" \
-    "-o" "bold,italic"
+    "-o" "bold,italic" \
+    "-d" "true" \
+    "-u" "Offsite Backup"
 
   unset FTP_PASSWORD
 }

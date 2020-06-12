@@ -1,4 +1,5 @@
 #!/bin/bash
+source $SCRIPT_DIR/lib/discord_utils.sh
 source $SCRIPT_DIR/lib/minecraft_server_control.sh
 source $SCRIPT_DIR/lib/time_utils.sh
 
@@ -8,6 +9,10 @@ timer_text()
     say_in_minecraft "$1"
   else
     tellraw_in_minecraft "$1" "$tellraw_color" "$tellraw_options"
+  fi
+
+  if [[ ! -z $send_to_discord ]]; then
+    send_message_to_discord "$1" "$discord_username"
   fi
 }
 
@@ -25,7 +30,7 @@ run_progress_timer()
   local message_interval_in_seconds=1
   local show_hours=false
 
-  while getopts "s:p:f:m:h:c:o:" OPTION
+  while getopts "s:p:f:m:h:c:o:d:u:" OPTION
   do
     case $OPTION in
       s) start_message="$OPTARG"
@@ -42,7 +47,11 @@ run_progress_timer()
          ;;
       o) tellraw_options="$OPTARG"
          ;;
-      ?) printf "Usage: %s <task_function> [-s <start_message>] [-p <progress_message>] [-f <finish_message>] [-m <message_interval>] [-h <show_hours>] [-c <tellraw_color>] [-o <tellraw_options>]" $(basename $0) >&2
+      d) send_to_discord=$OPTARG
+         ;;
+      u) discord_username="$OPTARG"
+         ;;
+      ?) printf "Usage: %s <task_function> [-s <start_message>] [-p <progress_message>] [-f <finish_message>] [-m <message_interval>] [-h <show_hours>] [-c <tellraw_color>] [-o <tellraw_options>] [-d <send_to_discord>] [-u <discord_username>]" $(basename $0) >&2
          exit 2
          ;;
     esac
