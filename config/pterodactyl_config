@@ -1,0 +1,6 @@
+#!/bin/bash
+
+PTERODACTYL_SERVER_ID=
+
+PTERODACTYL_CLIENT_API_KEY=
+PTERODACTYL_API_HOST=https://pterodactyl.minecartrapidtransit.net

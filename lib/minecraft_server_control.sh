@@ -26,18 +26,18 @@ tellraw_in_minecraft()
   local underline_option=
 
   if [[ $options == *"bold"* ]]; then
-    bold_option=", \"bold\":true"
+    bold_option=", \\\"bold\\\":true"
   fi
 
   if [[ $options == *"italic"* ]]; then
-    italic_option=", \"italic\":true"
+    italic_option=", \\\"italic\\\":true"
   fi
 
   if [[ $options == *"underlined"* ]]; then
-    underlined_option=", \"underlined\":true"
+    underlined_option=", \\\"underlined\\\":true"
   fi
 
-  local json="{\"text\":\"$text\", \"color\":\"$color\"$bold_option$italic_option$underlined_option}"
+  local json="{\\\"text\\\":\\\"$text\\\", \\\"color\\\":\\\"$color\\\"$bold_option$italic_option$underlined_option}"
 
   run_minecraft_command "tellraw @a $json"
 
