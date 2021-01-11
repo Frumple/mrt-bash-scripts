@@ -11,7 +11,7 @@ source $SCRIPT_DIR/lib/progress_timer.sh
 source $SCRIPT_DIR/lib/minecraft_server_control.sh
 
 # Number of seconds to wait before starting the save (prevents clobbering with TPS and restart messages)
-START_DELAY_IN_SECONDS=1
+START_DELAY_IN_SECONDS=5
 
 sync_minecraft_server()
 {

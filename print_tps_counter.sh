@@ -14,7 +14,7 @@ TPS_RUN_COMMAND=true
 
 # Number of seconds to wait between sending the /tps command and searching its output
 # Set this to 0 if TPS_RUN_COMMAND is false
-TPS_DELAY_IN_SECONDS=0
+TPS_DELAY_IN_SECONDS=2
 
 # How many lines back should we search for the /tps output in the Minecraft server log?
 TPS_SEARCH_NUMBER_OF_LINES=100
