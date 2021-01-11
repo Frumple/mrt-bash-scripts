@@ -10,7 +10,7 @@ TPS_LAST_VALUE_FILE_PATH=$SCRIPT_DIR/data/last_tps
 
 # Should the script run the /tps command?
 # This may be set to false if the server wrapper (i.e. AMP) periodically runs the /tps command already.
-TPS_RUN_COMMAND=false
+TPS_RUN_COMMAND=true
 
 # Number of seconds to wait between sending the /tps command and searching its output
 # Set this to 0 if TPS_RUN_COMMAND is false

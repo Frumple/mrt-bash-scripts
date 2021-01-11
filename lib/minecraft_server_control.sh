@@ -4,10 +4,11 @@ source $SCRIPT_DIR/config/log_config
 source $SCRIPT_DIR/config/minecraft_config
 
 source $SCRIPT_DIR/lib/log_utils.sh
+source $SCRIPT_DIR/lib/pterodactyl_utils.sh
 
 run_minecraft_command()
 {
-  docker exec $CONTAINER_NAME ./run-minecraft-command.sh "$1"
+  send_command_to_pterodactyl_server ${PTERODACTYL_SERVER_ID} "$1"
 }
 
 say_in_minecraft()
