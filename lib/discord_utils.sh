@@ -1,10 +1,13 @@
 #!/bin/bash
-source $SCRIPT_DIR/config/discord_config
+source ${SCRIPT_DIR}/config/discord_config
 
 send_message_to_discord() {
-  if [[ -z $2 ]]; then
-    $SCRIPT_DIR/lib/vendor/discord.sh --webhook-url="$DISCORD_WEBHOOK" --text "$1"
+  local text=$1
+  local username=$2
+
+  if [[ -z ${username} ]]; then
+    ${SCRIPT_DIR}/lib/vendor/discord.sh --webhook-url="$DISCORD_WEBHOOK" --text "${text}"
   else
-    $SCRIPT_DIR/lib/vendor/discord.sh --webhook-url="$DISCORD_WEBHOOK" --text "$1" --username "$2"
+    ${SCRIPT_DIR}/lib/vendor/discord.sh --webhook-url="$DISCORD_WEBHOOK" --text "${text}" --username "${username}"
   fi
 }
