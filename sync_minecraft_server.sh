@@ -1,10 +1,12 @@
 #!/bin/bash
 export SCRIPT_DIR=$( cd "$( dirname "$0" )" && pwd )
 source $SCRIPT_DIR/config/base_config
+source $SCRIPT_DIR/config/discord_config
 source $SCRIPT_DIR/config/mysql_config
 source $SCRIPT_DIR/config/minecraft_config
 source $SCRIPT_DIR/config/sync_config
 
+source $SCRIPT_DIR/lib/discord_utils.sh
 source $SCRIPT_DIR/lib/mysql_utils.sh
 source $SCRIPT_DIR/lib/sync_utils.sh
 source $SCRIPT_DIR/lib/progress_timer.sh
@@ -39,7 +41,7 @@ sync_minecraft_server()
       "-o" "bold,italic"
   else
     tellraw_in_minecraft "[Server] WARNING: Scheduled world save has been disabled." "red" "bold,italic"
-    tellraw_in_minecraft "[Server] If Frumple is not on the server, please notify him immediately." "red" "bold,italic"
+    send_message_to_discord "<@$DISCORD_OWNER_USER_ID> **Scheduled world save has been disabled.**" "World Save"
   fi
 }
 

@@ -1,3 +1,4 @@
 #!/bin/bash
 
 DISCORD_WEBHOOK=
+DISCORD_OWNER_USER_ID=
