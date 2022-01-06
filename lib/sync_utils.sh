@@ -1,19 +1,11 @@
 #!/bin/bash
 
-is_rdiff_backup_running()
+is_world_save_running()
 {
-  if [[ `ps acx | grep -v "grep" | grep --count "rdiff-backup"` -gt 0 ]]; then
-    true
-  else
-    false
-  fi
+  [[ `ps acx | grep --count "rdiff-backup"` -gt 0 ]]
 }
 
-is_duplicity_running()
+is_offsite_backup_running()
 {
-  if [[ `ps aux | grep -v "grep" | grep --count "duplicity"` -gt 0 ]]; then
-    true
-  else
-    false
-  fi
+  [[ `ps acx | grep --count "restic"` -gt 0 ]]
 }

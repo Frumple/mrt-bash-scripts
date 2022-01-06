@@ -19,15 +19,15 @@ sync_minecraft_server()
 {
   sleep $START_DELAY_IN_SECONDS
 
-  if is_duplicity_running; then
+  if is_world_save_running; then
     tellraw_in_minecraft "[Server] WARNING: Unable to run world save." "red" "bold,italic"
-    tellraw_in_minecraft "[Server] Reason: Offsite backup is in progress." "red" "bold,italic"
+    tellraw_in_minecraft "[Server] Reason: Another world save is in progress." "red" "bold,italic"
     exit 1
   fi
 
-  if is_rdiff_backup_running; then
+  if is_offsite_backup_running; then
     tellraw_in_minecraft "[Server] WARNING: Unable to run world save." "red" "bold,italic"
-    tellraw_in_minecraft "[Server] Reason: Another world save is in progress." "red" "bold,italic"
+    tellraw_in_minecraft "[Server] Reason: Offsite backup is in progress." "red" "bold,italic"
     exit 1
   fi
 
