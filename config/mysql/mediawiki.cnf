@@ -1,0 +1,9 @@
+[client]
+user = "mediawiki"
+password = ""
+host = "mysql"
+
+[mysqldump]
+single-transaction
+quick
+verbose

@@ -1,24 +1,18 @@
 #!/bin/bash
 export SCRIPT_DIR=$( cd "$( dirname "$0" )" && pwd )
-source $SCRIPT_DIR/config/base_config
-source $SCRIPT_DIR/config/discord_config
-source $SCRIPT_DIR/config/mysql_config
-source $SCRIPT_DIR/config/minecraft_config
-source $SCRIPT_DIR/config/sync_config
+source ${SCRIPT_DIR}/config/base_config
+source ${SCRIPT_DIR}/config/discord_config
+source ${SCRIPT_DIR}/config/minecraft_config
+source ${SCRIPT_DIR}/config/sync_config
 
-source $SCRIPT_DIR/lib/discord_utils.sh
-source $SCRIPT_DIR/lib/mysql_utils.sh
-source $SCRIPT_DIR/lib/sync_utils.sh
-source $SCRIPT_DIR/lib/progress_timer.sh
-source $SCRIPT_DIR/lib/minecraft_server_control.sh
-
-# Number of seconds to wait before starting the save (prevents clobbering with TPS and restart messages)
-START_DELAY_IN_SECONDS=5
+source ${SCRIPT_DIR}/lib/discord_utils.sh
+source ${SCRIPT_DIR}/lib/mysql_utils.sh
+source ${SCRIPT_DIR}/lib/sync_utils.sh
+source ${SCRIPT_DIR}/lib/progress_timer.sh
+source ${SCRIPT_DIR}/lib/minecraft_server_control.sh
 
 sync_minecraft_server()
 {
-  sleep $START_DELAY_IN_SECONDS
-
   if is_world_save_running; then
     tellraw_in_minecraft "[Server] WARNING: Unable to run world save." "red" "bold,italic"
     tellraw_in_minecraft "[Server] Reason: Another world save is in progress." "red" "bold,italic"
@@ -31,7 +25,7 @@ sync_minecraft_server()
     exit 1
   fi
 
-  if $SYNC_ENABLED; then
+  if ${SYNC_ENABLED}; then
     run_progress_timer "run_all_sync_tasks" \
       "-s" "[Server] Starting save..." \
       "-p" "[Server] Save in progress" \
@@ -53,22 +47,22 @@ run_all_sync_tasks()
 
 dump_all_plugin_databases()
 {
-  readarray plugin_databases < $SCRIPT_DIR/config/plugin_databases
+  readarray plugin_databases < ${SCRIPT_DIR}/config/plugin_databases
 
   for database_name in "${plugin_databases[@]}"
   do
-    database_name=$(echo $database_name | tr -d '\n')
-    echo $database_name
-    dump_plugin_database $database_name
+    dump_plugin_database ${database_name}
   done
 }
 
 dump_plugin_database()
 {
   local database_name=$1
-  local mysql_database=$( printf "%s_%s" $database_name $SERVER_NAME )
+  local mysql_database=$(printf "%s_%s" ${database_name} ${SERVER_NAME})
+  local output_file="${SYNC_SOURCE}/databases/$database_name.sql"
 
-  dump_mysql_database "$mysql_database" "$MYSQL_HOSTNAME" "$MYSQL_MINECRAFT_USERNAME" "$MYSQL_MINECRAFT_PASSWORD" "$SYNC_SOURCE/databases/$database_name.sql"
+  printf "Dumping '${database_name}' database...\n"
+  dump_mysql_database "${mysql_database}" "${MYSQL_MINECRAFT_CONFIG_FILE}" "${output_file}"
 }
 
 sync_minecraft_files()
@@ -82,12 +76,12 @@ sync_minecraft_files()
 
 copy_diffs()
 {
-  $SYNC_NICE_PREAMBLE rdiff-backup $SYNC_BACKUP_ARGUMENTS -v $SYNC_VERBOSITY $SYNC_SOURCE $SYNC_DESTINATION
+  ${SYNC_NICE_PREAMBLE} rdiff-backup ${SYNC_BACKUP_ARGUMENTS} -v ${SYNC_VERBOSITY} ${SYNC_SOURCE} ${SYNC_DESTINATION}
 }
 
 clean_old_diffs()
 {
-  $SYNC_NICE_PREAMBLE rdiff-backup --remove-older-than $SYNC_REMOVE_DIFFS_OLDER_THAN --force -v $SYNC_VERBOSITY $SYNC_DESTINATION
+  ${SYNC_NICE_PREAMBLE} rdiff-backup --remove-older-than ${SYNC_REMOVE_DIFFS_OLDER_THAN} --force -v ${SYNC_VERBOSITY} ${SYNC_DESTINATION}
 }
 
 sync_minecraft_server

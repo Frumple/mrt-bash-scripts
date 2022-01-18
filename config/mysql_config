@@ -1,4 +1,0 @@
-#!/bin/bash
-source $SCRIPT_DIR/config/base_config
-
-MYSQL_HOSTNAME=mysql

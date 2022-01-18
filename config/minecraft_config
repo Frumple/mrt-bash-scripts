@@ -1,8 +1,7 @@
 #!/bin/bash
-source $SCRIPT_DIR/config/base_config
+source ${SCRIPT_DIR}/config/base_config
 
-MYSQL_MINECRAFT_USERNAME=minecraft_$SERVER_NAME
-MYSQL_MINECRAFT_PASSWORD=
+MYSQL_MINECRAFT_CONFIG_FILE="${SCRIPT_DIR}/config/mysql/minecraft.cnf"
 
 SAVE_ALL_SEARCH_NUMBER_OF_LINES=10
 SAVE_ALL_TIMEOUT_IN_SECONDS=30

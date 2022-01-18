@@ -1,0 +1,8 @@
+[client]
+user = "minecraft_main"
+password = ""
+host = "mysql"
+
+[mysqldump]
+single-transaction
+quick

@@ -1,7 +1,6 @@
 #!/bin/bash
-source $SCRIPT_DIR/config/base_config
+source ${SCRIPT_DIR}/config/base_config
 
 MEDIAWIKI_DIR=/data/www/mediawiki
 
-MYSQL_MEDIAWIKI_USERNAME=mediawiki
-MYSQL_MEDIAWIKI_PASSWORD=
+MYSQL_MEDIAWIKI_CONFIG_FILE="${SCRIPT_DIR}/config/mysql/mediawiki.cnf"
