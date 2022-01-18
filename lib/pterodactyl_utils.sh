@@ -13,7 +13,9 @@ send_pterodactyl_client_api_request() {
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer ${PTERODACTYL_CLIENT_API_KEY}" \
     -X "${method}" \
-    -d "${body}"
+    -d "${body}" \
+    --silent \
+    --show-error
 }
 
 send_command_to_pterodactyl_server() {
