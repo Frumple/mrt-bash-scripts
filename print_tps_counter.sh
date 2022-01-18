@@ -1,12 +1,12 @@
 #!/bin/bash
 export SCRIPT_DIR=$( cd "$( dirname "$0" )" && pwd )
-source $SCRIPT_DIR/config/log_config
+source ${SCRIPT_DIR}/config/log_config
 
-source $SCRIPT_DIR/lib/minecraft_server_control.sh
-source $SCRIPT_DIR/lib/log_utils.sh
+source ${SCRIPT_DIR}/lib/minecraft_server_control.sh
+source ${SCRIPT_DIR}/lib/log_utils.sh
 
 # Path to file storing the last TPS value
-TPS_LAST_VALUE_FILE_PATH=$SCRIPT_DIR/data/last_tps
+TPS_LAST_VALUE_FILE_PATH=${SCRIPT_DIR}/data/last_tps
 
 # Should the script run the /tps command?
 # This may be set to false if the server wrapper (i.e. AMP) periodically runs the /tps command already.
@@ -33,7 +33,7 @@ TPS_OK_THRESHOLD=15
 
 get_tps_line()
 {
-  get_last_matching_line "$TPS_OUTPUT_LINE_REGEX" "$LATEST_LOG_PATH" $TPS_SEARCH_NUMBER_OF_LINES
+  get_last_matching_line "${TPS_OUTPUT_LINE_REGEX}" "${LATEST_LOG_PATH}" ${TPS_SEARCH_NUMBER_OF_LINES}
 }
 
 get_tps_value()
@@ -43,58 +43,62 @@ get_tps_value()
   local tps_range=$1
   local tps_index=1
 
-  if [[ "$tps_range" -eq 5 ]]; then
+  if [[ "${tps_range}" -eq 5 ]]; then
     tps_index=2
-  elif [[ "$tps_range" -eq 15 ]]; then
+  elif [[ "${tps_range}" -eq 15 ]]; then
     tps_index=3
   fi
-  get_tps_line | grep -E -o "$TPS_VALUE_REGEX" | head -$tps_index | tail -1
+  get_tps_line | grep -E -o "${TPS_VALUE_REGEX}" | head -${tps_index} | tail -1
 }
 
 print_tps_counter()
 {
-  echo $LATEST_LOG_PATH
-
   local tps_range=$1
-  if [[ -z "$tps_range" ]]; then
+  if [[ -z "${tps_range}" ]]; then
     tps_range=1
   fi
 
-  if $TPS_RUN_COMMAND; then
+  if ${TPS_RUN_COMMAND}; then
     run_minecraft_command "tps"
   fi
 
-  sleep $TPS_DELAY_IN_SECONDS
+  sleep ${TPS_DELAY_IN_SECONDS}
   local current_tps_value="$(get_tps_value $tps_range)"
   local last_tps_value="$(cat $TPS_LAST_VALUE_FILE_PATH)"
 
   local color="white"
   local change="(?)"
 
-  if [[ -z "$current_tps_value" ]] || [[ "$current_tps_value" == \** ]]; then
+  if [[ -z "${current_tps_value}" ]] || [[ "${current_tps_value}" == \** ]]; then
     current_tps_value="N/A"
     color="gray"
   else
-    if [[ $(echo "$current_tps_value >= $TPS_GOOD_THRESHOLD" | bc -l) -eq 1 ]]; then
+    if [[ $(echo "${current_tps_value} >= ${TPS_GOOD_THRESHOLD}" | bc -l) -eq 1 ]]; then
       color="green"
-    elif [[ $(echo "$current_tps_value >= $TPS_OK_THRESHOLD" | bc -l) -eq 1 ]]; then
+    elif [[ $(echo "${current_tps_value} >= ${TPS_OK_THRESHOLD}" | bc -l) -eq 1 ]]; then
       color="yellow"
     else
       color="red"
     fi
 
-    if [[ $(echo "$current_tps_value > $last_tps_value" | bc -l) -eq 1 ]]; then
+    if [[ $(echo "${current_tps_value} > ${last_tps_value}" | bc -l) -eq 1 ]]; then
       change="(+)"
-    elif [[ $(echo "$current_tps_value < $last_tps_value" | bc -l) -eq 1 ]]; then
+    elif [[ $(echo "${current_tps_value} < ${last_tps_value}" | bc -l) -eq 1 ]]; then
       change="(-)"
     else
       change="(=)"
     fi
   fi
 
-  echo $current_tps_value > $TPS_LAST_VALUE_FILE_PATH
+  echo ${current_tps_value} > ${TPS_LAST_VALUE_FILE_PATH}
 
-  tellraw_in_minecraft "[Server] Average TPS in last 15 min: $current_tps_value $change" "$color" "bold,italic"
+  tellraw_in_minecraft "[Server] Average TPS in last 15 min: ${current_tps_value} ${change}" "${color}" "bold,italic"
 }
 
-print_tps_counter $1
+# Only run this script if it is run directly
+running_script=$( basename ${0#~} )
+this_script=$( basename ${BASH_SOURCE} )
+
+if [[ ${running_script} = ${this_script} ]]; then
+  print_tps_counter $1
+fi

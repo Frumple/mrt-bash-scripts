@@ -27,7 +27,7 @@ sync_minecraft_server()
 
   if ${SYNC_ENABLED}; then
     run_progress_timer "run_all_sync_tasks" \
-      "-s" "[Server] Starting save..." \
+      "-s" "[Server] Starting save, lag spike starts now..." \
       "-p" "[Server] Save in progress" \
       "-f" "[Server] Save complete" \
       "-m" "30" \
@@ -69,6 +69,9 @@ sync_minecraft_files()
 {
   enter_readonly_mode_in_minecraft
   save_minecraft_world true
+
+  tellraw_in_minecraft "[Server] End of lag spike." "light_purple" "bold,italic"
+
   copy_diffs
   clean_old_diffs
   exit_readonly_mode_in_minecraft
@@ -84,4 +87,10 @@ clean_old_diffs()
   ${SYNC_NICE_PREAMBLE} rdiff-backup --remove-older-than ${SYNC_REMOVE_DIFFS_OLDER_THAN} --force -v ${SYNC_VERBOSITY} ${SYNC_DESTINATION}
 }
 
-sync_minecraft_server
+# Only run this script if it is run directly
+running_script=$( basename ${0#~} )
+this_script=$( basename ${BASH_SOURCE} )
+
+if [[ ${running_script} = ${this_script} ]]; then
+  sync_minecraft_server
+fi
