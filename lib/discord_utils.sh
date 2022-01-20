@@ -6,8 +6,8 @@ send_message_to_discord() {
   local username=$2
 
   if [[ -z ${username} ]]; then
-    ${SCRIPT_DIR}/lib/vendor/discord.sh --webhook-url="$DISCORD_WEBHOOK" --text "${text}"
+    ${SCRIPT_DIR}/lib/vendor/discord.sh --webhook-url="${DISCORD_WEBHOOK}" --text "${text}"
   else
-    ${SCRIPT_DIR}/lib/vendor/discord.sh --webhook-url="$DISCORD_WEBHOOK" --text "${text}" --username "${username}"
+    ${SCRIPT_DIR}/lib/vendor/discord.sh --webhook-url="${DISCORD_WEBHOOK}" --text "${text}" --username "${username}"
   fi
 }

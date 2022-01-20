@@ -1,5 +1,5 @@
 #!/bin/bash
-source $SCRIPT_DIR/config/base_config
+source ${SCRIPT_DIR}/config/base_config
 
 get_last_matching_line()
 {
@@ -11,7 +11,7 @@ get_last_matching_line()
     search_number_of_lines=100
   fi
 
-  tail -n $search_number_of_lines $log_file_path | grep -P "$regex" | tail -n 1
+  tail -n ${search_number_of_lines} ${log_file_path} | grep -P "${regex}" | tail -n 1
 }
 
 get_number_of_matching_lines()
@@ -24,5 +24,5 @@ get_number_of_matching_lines()
     search_number_of_lines=100
   fi
 
-  tail -n $search_number_of_lines $log_file_path | grep -c -P "$regex"
+  tail -n ${search_number_of_lines} ${log_file_path} | grep -c -P "${regex}"
 }

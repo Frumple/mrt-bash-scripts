@@ -1,5 +1,5 @@
 #!/bin/bash
-source $SCRIPT_DIR/config/pterodactyl_config
+source ${SCRIPT_DIR}/config/pterodactyl_config
 
 send_pterodactyl_client_api_request() {
   local endpoint=$1

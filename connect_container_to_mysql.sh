@@ -18,31 +18,31 @@ PIPE_DIR=/home/frumple/scripts/pipes
 PIPE_NAME=connect_container_to_mysql
 
 # Full path to the named pipe
-PIPE_PATH="$PIPE_DIR/$PIPE_NAME"
+PIPE_PATH="${PIPE_DIR}/${PIPE_NAME}"
 
 # Name of the docker network to connect the container to
 DOCKER_MYSQL_NETWORK_NAME=mysql-net
 
 connect_container_to_mysql()
 {
-  if [[ -p $PIPE_PATH ]]; then
-    echo "Named pipe already exists: $PIPE_PATH"
+  if [[ -p ${PIPE_PATH} ]]; then
+    printf "Named pipe already exists: ${PIPE_PATH}\n"
   else
-    echo "Creating named pipe: $PIPE_PATH"
-    mkdir $PIPE_DIR
-    mkfifo $PIPE_PATH
+    printf "Creating named pipe: ${PIPE_PATH}\n"
+    mkdir ${PIPE_DIR}
+    mkfifo ${PIPE_PATH}
   fi
 
-  echo "Now listening for container IDs from named pipe..."
+  printf "Now listening for container IDs from named pipe...\n"
 
   while
-    local container_id=$(cat $PIPE_PATH)
-    echo "Running: docker network connect $DOCKER_MYSQL_NETWORK_NAME $container_id"
-    docker network connect $DOCKER_MYSQL_NETWORK_NAME $container_id
-    [[ ! -z $container_id ]]
+    local container_id=$(cat ${PIPE_PATH})
+    printf "Running: docker network connect ${DOCKER_MYSQL_NETWORK_NAME} ${container_id}\n"
+    docker network connect ${DOCKER_MYSQL_NETWORK_NAME} ${container_id}
+    [[ ! -z ${container_id} ]]
   do true; done
 
-  echo "Unable to read pipe, exiting..."
+  printf "Unable to read pipe, exiting...\n"
 }
 
 connect_container_to_mysql

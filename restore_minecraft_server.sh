@@ -1,6 +1,6 @@
 #!/bin/bash
 export SCRIPT_DIR=$( cd "$( dirname "$0" )" && pwd )
-source $SCRIPT_DIR/config/sync_config
+source ${SCRIPT_DIR}/config/sync_config
 
 restore_minecraft_server()
 {
@@ -10,13 +10,13 @@ restore_minecraft_server()
     restore_time=$1
   fi
 
-  if $SYNC_ENABLED; then
+  if ${SYNC_ENABLED}; then
     printf "This script will not run while syncing is enabled. Exiting...\n"
     exit
   fi
 
-  mkdir -p $SYNC_SOURCE
-  rdiff-backup -r $restore_time -v $SYNC_VERBOSITY $SYNC_DESTINATION $SYNC_SOURCE
+  mkdir -p ${SYNC_SOURCE}
+  rdiff-backup -r ${restore_time} -v ${SYNC_VERBOSITY} ${SYNC_DESTINATION} ${SYNC_SOURCE}
 }
 
 restore_minecraft_server $1
