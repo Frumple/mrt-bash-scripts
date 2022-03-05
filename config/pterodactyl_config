@@ -1,6 +1,9 @@
 #!/bin/bash
+source ${SCRIPT_DIR}/config/base_config
 
 PTERODACTYL_SERVER_ID=
 
 PTERODACTYL_CLIENT_API_KEY=
 PTERODACTYL_API_HOST=https://pterodactyl.minecartrapidtransit.net
+
+MYSQL_PTERODACTYL_CONFIG_FILE="${SCRIPT_DIR}/config/mysql/pterodactyl.cnf"
