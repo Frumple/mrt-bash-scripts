@@ -6,3 +6,4 @@ host = "mysql"
 [mysqldump]
 single-transaction
 quick
+no-tablespaces
