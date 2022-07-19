@@ -58,11 +58,11 @@ exit_readonly_mode_in_minecraft()
 
 save_minecraft_world()
 {
-  local flush=$1
+  local flush_chunks=$1
   local command="save-all"
   local save_all_time_in_seconds=1
 
-  if ${flush}; then
+  if [ "${flush_chunks}" = true ]; then
     command+=" flush"
   fi
 

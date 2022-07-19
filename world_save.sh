@@ -8,9 +8,11 @@ source ${SCRIPT_DIR}/sync_minecraft_server.sh
 
 world_save()
 {
+  local flush_chunks=$1
+
   print_tps_counter 15
   sleep 3
-  sync_minecraft_server
+  sync_minecraft_server ${flush_chunks}
 }
 
-world_save
+world_save $1

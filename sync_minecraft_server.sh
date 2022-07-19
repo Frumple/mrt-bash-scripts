@@ -13,6 +13,8 @@ source ${SCRIPT_DIR}/lib/minecraft_server_control.sh
 
 sync_minecraft_server()
 {
+  local flush_chunks=$1
+
   if is_world_save_running; then
     tellraw_in_minecraft "[Server] WARNING: Unable to run world save." "red" "bold,italic"
     tellraw_in_minecraft "[Server] Reason: Another world save is in progress." "red" "bold,italic"
@@ -25,9 +27,9 @@ sync_minecraft_server()
     exit 1
   fi
 
-  if ${SYNC_ENABLED}; then
-    run_progress_timer "run_all_sync_tasks" \
-      "-s" "[Server] Starting save, lag spike begins..." \
+  if [ "${SYNC_ENABLED}" = true ]; then
+    run_progress_timer "run_all_sync_tasks ${flush_chunks}" \
+      "-s" "[Server] Starting save..." \
       "-p" "[Server] Save in progress" \
       "-f" "[Server] Save complete" \
       "-m" "30" \
@@ -41,8 +43,10 @@ sync_minecraft_server()
 
 run_all_sync_tasks()
 {
+  local flush_chunks=$1
+
   dump_all_plugin_databases
-  sync_minecraft_files
+  sync_minecraft_files ${flush_chunks}
 }
 
 dump_all_plugin_databases()
@@ -67,10 +71,19 @@ dump_plugin_database()
 
 sync_minecraft_files()
 {
-  enter_readonly_mode_in_minecraft
-  save_minecraft_world true
+  local flush_chunks=$1
 
-  tellraw_in_minecraft "[Server] Lag spike ends." "light_purple" "bold,italic"
+  enter_readonly_mode_in_minecraft
+
+  if [ "${flush_chunks}" = true ]; then
+    tellraw_in_minecraft "[Server] Hourly lag spike begins in 5 seconds!" "gold" "bold,italic"
+    sleep 5
+    tellraw_in_minecraft "[Server] Lag spike begins..." "gold" "bold,italic"
+    save_minecraft_world true
+    tellraw_in_minecraft "[Server] Lag spike ends." "gold" "bold,italic"
+  else
+    save_minecraft_world false
+  fi
 
   copy_diffs
   clean_old_diffs
@@ -92,5 +105,5 @@ running_script=$( basename ${0#~} )
 this_script=$( basename ${BASH_SOURCE} )
 
 if [[ ${running_script} = ${this_script} ]]; then
-  sync_minecraft_server
+  sync_minecraft_server $1
 fi
