@@ -69,7 +69,7 @@ save_minecraft_world()
   run_minecraft_command "${command}"
   sleep 1
 
-  while [ $(get_number_of_matching_lines "Saved the game" "${LATEST_LOG_PATH}" ${SAVE_ALL_SEARCH_NUMBER_OF_LINES}) -lt 1 ] && [ ${save_all_time_in_seconds} -lt ${SAVE_ALL_TIMEOUT_IN_SECONDS} ]
+  while [ $(get_number_of_matching_lines "\[Server thread/INFO\]: Saved the game" "${LATEST_LOG_PATH}" ${SAVE_ALL_SEARCH_NUMBER_OF_LINES}) -lt 1 ] && [ ${save_all_time_in_seconds} -lt ${SAVE_ALL_TIMEOUT_IN_SECONDS} ]
   do
     sleep 1
     ((save_all_time_in_seconds++))
