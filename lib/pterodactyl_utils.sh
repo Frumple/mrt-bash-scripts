@@ -22,10 +22,18 @@ send_command_to_pterodactyl_server() {
   local server_id=$1
   local command=$2
 
-  echo ${command}
-
   send_pterodactyl_client_api_request \
     "servers/${server_id}/command" \
     "POST" \
     "{\"command\": \"${command}\"}"
+}
+
+send_power_signal_to_pterodactyl_server() {
+  local server_id=$1
+  local signal=$2
+
+  send_pterodactyl_client_api_request \
+    "servers/${server_id}/power" \
+    "POST" \
+    "{\"signal\": \"${signal}\"}"
 }

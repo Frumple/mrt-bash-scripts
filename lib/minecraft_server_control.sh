@@ -79,5 +79,20 @@ save_minecraft_world()
 
 restart_minecraft_server()
 {
-  run_minecraft_command "restart"
+  send_power_signal_to_pterodactyl_server ${PTERODACTYL_SERVER_ID} "restart"
+}
+
+start_minecraft_server()
+{
+  send_power_signal_to_pterodactyl_server ${PTERODACTYL_SERVER_ID} "start"
+}
+
+stop_minecraft_server()
+{
+  send_power_signal_to_pterodactyl_server ${PTERODACTYL_SERVER_ID} "stop"
+}
+
+wait_for_minecraft_server_to_stop()
+{
+  docker wait ${PTERODACTYL_SERVER_ID}
 }

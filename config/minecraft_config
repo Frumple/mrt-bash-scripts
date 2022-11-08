@@ -1,6 +1,9 @@
 #!/bin/bash
 source ${SCRIPT_DIR}/config/base_config
 
+MAP_UPLOAD_SOURCE=/home/frumple/git/mrt-file-server/instance/production/uploads/maps
+MAP_UPLOAD_DESTINATION=/home/minecraft/servers/${SERVER_NAME}/worlds/new/data
+
 MYSQL_MINECRAFT_CONFIG_FILE="${SCRIPT_DIR}/config/mysql/minecraft.cnf"
 
 SAVE_ALL_SEARCH_NUMBER_OF_LINES=100
