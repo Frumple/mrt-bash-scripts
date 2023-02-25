@@ -21,10 +21,12 @@ tellraw_in_minecraft()
   local text=$1
   local color=$2
   local options=$3
+  local url=$4
 
   local bold_option=
   local italic_option=
   local underline_option=
+  local url_option=
 
   if [[ ${options} == *"bold"* ]]; then
     bold_option=", \\\"bold\\\":true"
@@ -38,7 +40,11 @@ tellraw_in_minecraft()
     underlined_option=", \\\"underlined\\\":true"
   fi
 
-  local json="{\\\"text\\\":\\\"${text}\\\", \\\"color\\\":\\\"${color}\\\"${bold_option}${italic_option}${underlined_option}}"
+  if [[ ! -z ${url} ]]; then
+    url_option=", \\\"clickEvent\\\":{\\\"action\\\":\\\"open_url\\\",\\\"value\\\":\\\"${url}\\\"}"
+  fi
+
+  local json="{\\\"text\\\":\\\"${text}\\\", \\\"color\\\":\\\"${color}\\\"${bold_option}${italic_option}${underlined_option}${url_option}}"
 
   run_minecraft_command "tellraw @a $json"
 
