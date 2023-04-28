@@ -2,5 +2,12 @@
 source ${SCRIPT_DIR}/config/base_config
 
 MEDIAWIKI_DIR=/data/www/mediawiki
+MEDIAWIKI_DATABASE_DIR="${MEDIAWIKI_DIR}/database"
+
+MEDIAWIKI_LOCAL_SETTINGS_FILE="${MEDIAWIKI_DIR}/LocalSettings.php"
+
+MEDIAWIKI_READONLY_LOCK_FILE="${MEDIAWIKI_DIR}/readonly.lock"
+MEDIAWIKI_READONLY_MESSAGE="The wiki is currently being backed up. Please check back later to publish your edits."
+MEDIAWIKI_READONLY_SITENOTICE="[[File:Achtung.svg|32px]]   \\\'\\\'\\\'The wiki is currently in read-only mode while it is being backed up. Please check back later to edit pages.\\\'\\\'\\\'   [[File:Achtung.svg|32px]]"
 
 MYSQL_MEDIAWIKI_CONFIG_FILE="${SCRIPT_DIR}/config/mysql/mediawiki.cnf"
