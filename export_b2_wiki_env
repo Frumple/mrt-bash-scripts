@@ -1,0 +1,8 @@
+# Run 'source export_b2_wiki_env' to add the environment variables to your current session.
+export SCRIPT_DIR=/home/frumple/scripts
+source ${SCRIPT_DIR}/config/b2_wiki_config
+
+export B2_ACCOUNT_ID
+export B2_ACCOUNT_KEY
+export RESTIC_REPOSITORY
+export RESTIC_PASSWORD

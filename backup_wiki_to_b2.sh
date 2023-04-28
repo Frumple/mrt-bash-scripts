@@ -1,6 +1,6 @@
 #!/bin/bash
 export SCRIPT_DIR=$( cd "$( dirname "$0" )" && pwd )
-source ${SCRIPT_DIR}/config/b2_config
+source ${SCRIPT_DIR}/config/b2_wiki_config
 source ${SCRIPT_DIR}/config/wiki_config
 
 source ${SCRIPT_DIR}/lib/wiki_utils.sh

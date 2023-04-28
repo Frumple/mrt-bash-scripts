@@ -1,0 +1,14 @@
+#!/bin/bash
+source ${SCRIPT_DIR}/config/base_config
+
+B2_ACCOUNT_ID=""
+B2_ACCOUNT_KEY=""
+B2_BUCKET_NAME=""
+
+RESTIC_REPOSITORY="b2:${B2_BUCKET_NAME}"
+RESTIC_PASSWORD=""
+
+B2_SOURCE="/data/www/mediawiki"
+
+B2_FORGET_OPTIONS="--prune --repack-cacheable-only --keep-within=7d1h"
+B2_BACKUP_OPTIONS="--one-file-system --limit-upload=20000 --verbose=3"

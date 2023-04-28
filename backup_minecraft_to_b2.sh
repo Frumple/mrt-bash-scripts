@@ -1,6 +1,6 @@
 #!/bin/bash
 export SCRIPT_DIR=$( cd "$( dirname "$0" )" && pwd )
-source ${SCRIPT_DIR}/config/b2_config
+source ${SCRIPT_DIR}/config/b2_minecraft_config
 source ${SCRIPT_DIR}/config/sync_config
 
 source ${SCRIPT_DIR}/lib/minecraft_server_control.sh
