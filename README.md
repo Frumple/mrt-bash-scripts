@@ -1,4 +1,4 @@
-![Minecart Rapid Transit Logo](https://www.minecartrapidtransit.net/wp-content/uploads/2015/01/logo-with-title2.png)
+![Minecart Rapid Transit Logo](https://github.com/Frumple/mrt-docker-services/assets/68396/32a557d8-f5ad-44ae-9d71-da1ad7d31a55)
 
 # MRT Bash Scripts
 Internal bash scripts used by the **[Minecart Rapid Transit (MRT) Minecraft Server](https://www.minecartrapidtransit.net)** for the automation of common tasks such as syncing world data, creating backups, and starting dynmap renders.
