@@ -1,9 +1,9 @@
 #!/bin/bash
-source $SCRIPT_DIR/config/base_config
+source ${SCRIPT_DIR}/config/base_config
 
 SYNC_ENABLED=true
-SYNC_SOURCE=/home/minecraft/servers/$SERVER_NAME
-SYNC_DESTINATION=/data/minecraft/servers/$SERVER_NAME
+SYNC_SOURCE=
+SYNC_DESTINATION=/data/minecraft/servers/${SERVER_NAME}
 SYNC_VERBOSITY=5
 SYNC_NICE_PREAMBLE="nice -n 19 ionice -c3"
 SYNC_BACKUP_ARGUMENTS="--create-full-path --no-compression --no-file-statistics --print-statistics"

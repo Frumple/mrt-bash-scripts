@@ -92,12 +92,12 @@ sync_minecraft_files()
 
 copy_diffs()
 {
-  ${SYNC_NICE_PREAMBLE} rdiff-backup ${SYNC_BACKUP_ARGUMENTS} -v ${SYNC_VERBOSITY} ${SYNC_SOURCE} ${SYNC_DESTINATION}
+  ${SYNC_NICE_PREAMBLE} rdiff-backup -v ${SYNC_VERBOSITY} backup ${SYNC_BACKUP_ARGUMENTS} ${SYNC_SOURCE} ${SYNC_DESTINATION}
 }
 
 clean_old_diffs()
 {
-  ${SYNC_NICE_PREAMBLE} rdiff-backup --remove-older-than ${SYNC_REMOVE_DIFFS_OLDER_THAN} --force -v ${SYNC_VERBOSITY} ${SYNC_DESTINATION}
+  ${SYNC_NICE_PREAMBLE} rdiff-backup --force -v ${SYNC_VERBOSITY} remove increments --older-than ${SYNC_REMOVE_DIFFS_OLDER_THAN} ${SYNC_DESTINATION}
 }
 
 # Only run this script if it is run directly
