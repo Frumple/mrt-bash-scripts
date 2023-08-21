@@ -76,7 +76,7 @@ sync_minecraft_files()
   enter_readonly_mode_in_minecraft
 
   if [ "${flush_chunks}" = true ]; then
-    tellraw_in_minecraft "[Server] Hourly lag spike begins in 5 seconds!" "gold" "bold,italic"
+    tellraw_in_minecraft "[Server] Lag spike begins in 5 seconds!" "gold" "bold,italic"
     sleep 5
     tellraw_in_minecraft "[Server] Lag spike begins..." "gold" "bold,italic"
     save_minecraft_world true
