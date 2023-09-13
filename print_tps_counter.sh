@@ -20,7 +20,7 @@ TPS_DELAY_IN_SECONDS=2
 TPS_SEARCH_NUMBER_OF_LINES=100
 
 # Regex to search for the /tps output
-TPS_OUTPUT_LINE_REGEX="\[Server thread/INFO\]: TPS from last 1m, 5m, 15m:"
+TPS_OUTPUT_LINE_REGEX="\[⚡\] TPS from last 5s, 10s, 1m, 5m, 15m:"
 
 # Regex to get the latest TPS value
 TPS_VALUE_REGEX="\*?[0-9]+\.[0-9]+"
@@ -33,37 +33,30 @@ TPS_OK_THRESHOLD=15
 
 get_tps_line()
 {
-  get_last_matching_line "${TPS_OUTPUT_LINE_REGEX}" "${LATEST_LOG_PATH}" ${TPS_SEARCH_NUMBER_OF_LINES}
+  get_line_after_last_matching_line "${TPS_OUTPUT_LINE_REGEX}" "${LATEST_LOG_PATH}" ${TPS_SEARCH_NUMBER_OF_LINES}
 }
 
 get_tps_value()
 {
-  # tps_range can be of values 1, 5, or 15,
-  # indicating whether to get the TPS value for the last 1, 5, or 15 minutes
-  local tps_range=$1
-  local tps_index=1
+  # tps_index can be 1 to 5, indicating which TPS value to use:
+  # 1: Last 5 seconds
+  # 2: Last 10 seconds
+  # 3: Last 1 minute
+  # 4: Last 5 minutes
+  # 5: Last 15 minutes
+  local tps_index=$1
 
-  if [[ "${tps_range}" -eq 5 ]]; then
-    tps_index=2
-  elif [[ "${tps_range}" -eq 15 ]]; then
-    tps_index=3
-  fi
   get_tps_line | grep -E -o "${TPS_VALUE_REGEX}" | head -${tps_index} | tail -1
 }
 
 print_tps_counter()
 {
-  local tps_range=$1
-  if [[ -z "${tps_range}" ]]; then
-    tps_range=1
-  fi
-
   if ${TPS_RUN_COMMAND}; then
     run_minecraft_command "tps"
   fi
 
   sleep ${TPS_DELAY_IN_SECONDS}
-  local current_tps_value="$(get_tps_value $tps_range)"
+  local current_tps_value="$(get_tps_value 5)"
   local last_tps_value="$(cat $TPS_LAST_VALUE_FILE_PATH)"
 
   local color="white"

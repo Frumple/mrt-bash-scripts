@@ -10,7 +10,7 @@ world_save()
 {
   local flush_chunks=$1
 
-  print_tps_counter 15
+  print_tps_counter
   sleep 3
   sync_minecraft_server ${flush_chunks}
 }
