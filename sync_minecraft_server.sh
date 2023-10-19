@@ -76,7 +76,7 @@ sync_minecraft_files()
   enter_readonly_mode_in_minecraft
 
   if [ "${flush_chunks}" = true ]; then
-    tellraw_in_minecraft "[Server] Hourly lag spike begins in 5 seconds!" "gold" "bold,italic"
+    tellraw_in_minecraft "[Server] Lag spike begins in 5 seconds!" "gold" "bold,italic"
     sleep 5
     tellraw_in_minecraft "[Server] Lag spike begins..." "gold" "bold,italic"
     save_minecraft_world true
@@ -92,12 +92,12 @@ sync_minecraft_files()
 
 copy_diffs()
 {
-  ${SYNC_NICE_PREAMBLE} rdiff-backup ${SYNC_BACKUP_ARGUMENTS} -v ${SYNC_VERBOSITY} ${SYNC_SOURCE} ${SYNC_DESTINATION}
+  ${SYNC_NICE_PREAMBLE} rdiff-backup -v ${SYNC_VERBOSITY} backup ${SYNC_BACKUP_ARGUMENTS} ${SYNC_SOURCE} ${SYNC_DESTINATION}
 }
 
 clean_old_diffs()
 {
-  ${SYNC_NICE_PREAMBLE} rdiff-backup --remove-older-than ${SYNC_REMOVE_DIFFS_OLDER_THAN} --force -v ${SYNC_VERBOSITY} ${SYNC_DESTINATION}
+  ${SYNC_NICE_PREAMBLE} rdiff-backup --force -v ${SYNC_VERBOSITY} remove increments --older-than ${SYNC_REMOVE_DIFFS_OLDER_THAN} ${SYNC_DESTINATION}
 }
 
 # Only run this script if it is run directly

@@ -16,7 +16,7 @@ restore_minecraft_server()
   fi
 
   mkdir -p ${SYNC_SOURCE}
-  rdiff-backup -r ${restore_time} -v ${SYNC_VERBOSITY} ${SYNC_DESTINATION} ${SYNC_SOURCE}
+  rdiff-backup -v ${SYNC_VERBOSITY} restore --at ${restore_time} ${SYNC_DESTINATION} ${SYNC_SOURCE}
 }
 
 restore_minecraft_server $1
