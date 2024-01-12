@@ -11,18 +11,20 @@ backup_wiki_to_b2()
   enter_wiki_readonly_mode
   dump_wiki_database_to_file
 
-  export B2_ACCOUNT_ID
-  export B2_ACCOUNT_KEY
+  export AWS_ACCESS_KEY_ID
+  export AWS_SECRET_ACCESS_KEY
   export RESTIC_REPOSITORY
   export RESTIC_PASSWORD
+  export GOMAXPROCS
 
   cleanup_old_b2_backups
   run_b2_backup
 
-  unset B2_ACCOUNT_ID
-  unset B2_ACCOUNT_KEY
+  unset AWS_ACCESS_KEY_ID
+  unset AWS_SECRET_ACCESS_KEY
   unset RESTIC_REPOSITORY
   unset RESTIC_PASSWORD
+  unset GOMAXPROCS
 
   exit_wiki_readonly_mode
 }
@@ -41,12 +43,12 @@ exit_wiki_readonly_mode()
 
 cleanup_old_b2_backups()
 {
-  restic forget ${B2_FORGET_OPTIONS}
+  restic forget ${RESTIC_FORGET_OPTIONS}
 }
 
 run_b2_backup()
 {
-  restic backup ${B2_BACKUP_OPTIONS} ${B2_SOURCE}
+  restic backup ${RESTIC_BACKUP_OPTIONS} ${RESTIC_SOURCE}
 }
 
 backup_wiki_to_b2

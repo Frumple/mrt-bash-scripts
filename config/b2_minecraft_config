@@ -1,14 +1,16 @@
 #!/bin/bash
 source ${SCRIPT_DIR}/config/base_config
 
-B2_ACCOUNT_ID=""
-B2_ACCOUNT_KEY=""
+AWS_ACCESS_KEY_ID=""
+AWS_SECRET_ACCESS_KEY=""
 B2_BUCKET_NAME=""
 
-RESTIC_REPOSITORY="b2:${B2_BUCKET_NAME}"
+RESTIC_REPOSITORY="s3:s3.us-east-005.backblazeb2.com/${B2_BUCKET_NAME}"
 RESTIC_PASSWORD=""
 
-B2_SOURCE="/data/minecraft/servers/${SERVER_NAME}"
+RESTIC_SOURCE="/data/minecraft/servers/${SERVER_NAME}"
 
-B2_FORGET_OPTIONS="--prune --repack-cacheable-only --keep-within=7d1h"
-B2_BACKUP_OPTIONS="--exclude=**/cache/** --exclude=**/rdiff-backup-data/** --one-file-system --limit-upload=20000 --verbose=3"
+RESTIC_FORGET_OPTIONS="--prune --repack-cacheable-only --keep-within=7d1h"
+RESTIC_BACKUP_OPTIONS="--exclude=**/cache/** --exclude=**/rdiff-backup-data/** --one-file-system --limit-upload=20000 --verbose=3"
+
+GOMAXPROCS=4

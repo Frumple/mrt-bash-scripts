@@ -21,10 +21,11 @@ backup_minecraft_to_b2()
     exit 1
   fi
 
-  export B2_ACCOUNT_ID
-  export B2_ACCOUNT_KEY
+  export AWS_ACCESS_KEY_ID
+  export AWS_SECRET_ACCESS_KEY
   export RESTIC_REPOSITORY
   export RESTIC_PASSWORD
+  export GOMAXPROCS
 
   run_progress_timer "cleanup_old_b2_backups" \
     "-s" "[Server] Cleaning up old offsite backups..." \
@@ -47,20 +48,21 @@ backup_minecraft_to_b2()
     "-d" "true" \
     "-u" "Offsite Backup"
 
-  unset B2_ACCOUNT_ID
-  unset B2_ACCOUNT_KEY
+  unset AWS_ACCESS_KEY_ID
+  unset AWS_SECRET_ACCESS_KEY
   unset RESTIC_REPOSITORY
   unset RESTIC_PASSWORD
+  unset GOMAXPROCS
 }
 
 cleanup_old_b2_backups()
 {
-  restic forget ${B2_FORGET_OPTIONS}
+  restic forget ${RESTIC_FORGET_OPTIONS}
 }
 
 run_b2_backup()
 {
-  restic backup ${B2_BACKUP_OPTIONS} ${B2_SOURCE}
+  restic backup ${RESTIC_BACKUP_OPTIONS} ${RESTIC_SOURCE}
 }
 
 backup_minecraft_to_b2
