@@ -52,7 +52,7 @@ get_tps_value()
 print_tps_counter()
 {
   if ${TPS_RUN_COMMAND}; then
-    run_minecraft_command "tps"
+    run_minecraft_command "spark tps"
   fi
 
   sleep ${TPS_DELAY_IN_SECONDS}
